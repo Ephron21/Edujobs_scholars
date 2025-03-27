@@ -1,0 +1,715 @@
+/* Dashboard specific styles */
+.dashboard-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #3498db;
+}
+
+.stats-card {
+    border-left: 4px solid;
+    transition: all 0.3s;
+}
+
+.stats-card:hover {
+    transform: scale(1.03);
+}
+
+.stats-card.primary {
+    border-left-color: #3498db;
+}
+
+.stats-card.success {
+    border-left-color: #2ecc71;
+}
+
+.stats-card.warning {
+    border-left-color: #f39c12;
+}
+
+.stats-card.danger {
+    border-left-color: #e74c3c;
+}
+
+.admin-profile {
+    padding: 20px;
+    background: linear-gradient(135deg, #3498db, #1abc9c);
+    color: white;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-profile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/pattern.svg');
+    opacity: 0.1;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.profile-img:hover {
+    transform: scale(1.1);
+}
+
+.welcome-text {
+    animation: fadeInUp 1s ease-out;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #34495e;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.activity-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.activity-item:hover {
+    background-color: #f8f9fa;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.dot-success {
+    background-color: #2ecc71;
+}
+
+.dot-warning {
+    background-color: #f39c12;
+}
+
+.dot-danger {
+    background-color: #e74c3c;
+}
+
+.dot-info {
+    background-color: #3498db;
+}
+
+.typed-text {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.chart-container {
+    position: relative;
+    height: 250px;
+    margin-bottom: 20px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.menu-card {
+    cursor: pointer;
+    animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.system-alert {
+    animation: pulse 2s infinite;
+}
+
+.page-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #3498db;
+    transition: width 0.3s;
+}
+
+.page-title:hover::after {
+    width: 100%;
+}
+
+/* Additional Interactive Elements */
+.feature-card {
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.feature-card::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.5s ease;
+}
+
+.feature-card:hover::before {
+    transform: scale(10);
+}
+
+.feature-card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-card-icon {
+    transform: scale(1.2) rotate(10deg);
+}
+
+.feature-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.feature-card-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(45deg, #3498db, #4e73df);
+    color: white;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(45deg, #2ecc71, #1cc88a);
+    color: white;
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(45deg, #f39c12, #f6c23e);
+    color: white;
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(45deg, #e74c3c, #e74a3b);
+    color: white;
+}
+
+.bg-gradient-info {
+    background: linear-gradient(45deg, #3498db, #36b9cc);
+    color: white;
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(45deg, #6c757d, #858796);
+    color: white;
+}
+
+/* Task list styles */
+.task-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+.task-checkbox {
+    margin-right: 15px;
+}
+
+.task-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.task-checkbox label {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.task-checkbox input[type="checkbox"]:checked + label {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.task-checkbox input[type="checkbox"]:checked + label:after {
+    content: '✓';
+    position: absolute;
+    top: -3px;
+    left: 3px;
+    color: white;
+    font-size: 14px;
+}
+
+.task-content {
+    flex-grow: 1;
+}
+
+.task-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.task-checkbox input[type="checkbox"]:checked ~ .task-content .task-title {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.task-meta {
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+}
+
+.task-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.task-actions button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.task-actions button:hover {
+    color: #3498db;
+}
+
+.task-actions button.delete-btn:hover {
+    color: #e74c3c;
+}
+
+/* Calendar styles */
+.calendar-wrapper {
+    padding: 15px;
+}
+
+.calendar-day {
+    padding: 8px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.calendar-day:hover {
+    background-color: #f8f9fa;
+}
+
+.calendar-day.active {
+    background-color: #3498db;
+    color: white;
+}
+
+.calendar-day.has-event {
+    position: relative;
+}
+
+.calendar-day.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #e74c3c;
+}
+
+/* User avatar with status */
+.user-avatar {
+    position: relative;
+    display: inline-block;
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.status-online {
+    background-color: #2ecc71;
+}
+
+.status-away {
+    background-color: #f39c12;
+}
+
+.status-offline {
+    background-color: #95a5a6;
+}
+
+/* Notification dropdown styles */
+.notification-dropdown {
+    min-width: 320px;
+    padding: 0;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.notification-header h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.notification-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    display: flex;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.3s;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    margin-right: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.notification-icon.bg-primary {
+    background-color: #3498db;
+}
+
+.notification-icon.bg-success {
+    background-color: #2ecc71;
+}
+
+.notification-icon.bg-warning {
+    background-color: #f39c12;
+}
+
+.notification-icon.bg-danger {
+    background-color: #e74c3c;
+}
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.notification-text {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #adb5bd;
+}
+
+.mark-all-read {
+    font-size: 13px;
+    font-weight: normal;
+    color: #3498db;
+    cursor: pointer;
+}
+
+.mark-all-read:hover {
+    text-decoration: underline;
+}
+
+/* File manager styles */
+.file-manager-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.file-item:hover {
+    background-color: #f8f9fa;
+}
+
+.file-icon {
+    font-size: 24px;
+    margin-right: 15px;
+    color: #3498db;
+}
+
+.file-icon.doc {
+    color: #4285f4;
+}
+
+.file-icon.sheet {
+    color: #0f9d58;
+}
+
+.file-icon.pres {
+    color: #f4b400;
+}
+
+.file-icon.pdf {
+    color: #e74c3c;
+}
+
+.file-icon.img {
+    color: #9c27b0;
+}
+
+.file-details {
+    flex-grow: 1;
+}
+
+.file-name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.file-meta {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.file-actions button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.file-actions button:hover {
+    color: #3498db;
+}
+
+.file-actions .delete-btn:hover {
+    color: #e74c3c;
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #34495e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+body.dark-mode {
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+}
+
+.dark-mode .card {
+    background-color: #16213e;
+    border-color: #1a1a2e;
+}
+
+.dark-mode .card-header {
+    background-color: #0f3460;
+    border-color: #1a1a2e;
+}
+
+.dark-mode .table {
+    color: #f0f0f0;
+}
+
+.dark-mode .table th {
+    background-color: #0f3460;
+    color: #f0f0f0;
+}
+
+.dark-mode .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Additional loading effects */
+.loading-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-effect::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    to {
+        left: 100%;
+    }
+} 

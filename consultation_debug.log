@@ -1,0 +1,125 @@
+Script started at 2025-03-27 10:01:47
+Database connection included
+Database connection successful
+Not a POST request, redirecting to homepage
+
+Script started at 2025-03-27 10:01:57
+Database connection included
+Database connection successful
+Not a POST request, redirecting to homepage
+
+Script started at 2025-03-27 10:03:04
+Database connection included
+Database connection successful
+POST method detected
+POST data: Array
+(
+    [name] => Test User
+    [email] => test@example.com
+    [phone] => 123456789
+    [service] => university_application
+    [message] => This is a testg purposes. message for debuggin
+)
+
+Sanitized inputs - Name: Test User, Email: test@example.com, Phone: 123456789, Service: university_application
+Validation errors: None
+Attempting database insertion
+Statement prepared successfully
+Parameters bound to statement
+Execute successful! Data inserted with ID: 1
+
+Script started at 2025-03-27 10:06:01
+Database connection included
+Database connection successful
+POST method detected
+POST data: Array
+(
+    [name] => Ephron TUYISHIMIRE
+    [email] => ephrontuyishime21@gmail.com
+    [phone] => 123456789
+    [service] => mifotra_setup
+    [message] => This is a testg purposes. message for debuggin
+)
+
+Sanitized inputs - Name: Ephron TUYISHIMIRE, Email: ephrontuyishime21@gmail.com, Phone: 123456789, Service: mifotra_setup
+Validation errors: None
+Attempting database insertion
+Statement prepared successfully
+Parameters bound to statement
+Execute successful! Data inserted with ID: 2
+
+Script started at 2025-03-27 10:07:32
+Database connection included
+Database connection successful
+POST method detected
+POST data: Array
+(
+    [name] => Ephron TUYISHIMIRE
+    [email] => ephrontuyishime21@gmail.com
+    [phone] => 123456789
+    [service] => mifotra_setup
+    [message] => This is a testg purposes. message for debuggin
+)
+
+Sanitized inputs - Name: Ephron TUYISHIMIRE, Email: ephrontuyishime21@gmail.com, Phone: 123456789, Service: mifotra_setup
+Validation errors: None
+Attempting database insertion
+Statement prepared successfully
+Parameters bound to statement
+Execute successful! Data inserted with ID: 3
+
+Script started at 2025-03-27 10:10:50
+Database connection included
+Database connection successful
+Not a POST request, redirecting to homepage
+
+Script started at 2025-03-27 10:10:54
+Database connection included
+Database connection successful
+POST method detected
+POST data: Array
+(
+    [name] => Ephron T
+    [email] => ephrontuyishime21@gmail.com
+    [phone] => 123456789
+    [service] => other
+    [message] => This is a testg purposes. message for debuggin
+)
+
+Sanitized inputs - Name: Ephron T, Email: ephrontuyishime21@gmail.com, Phone: 123456789, Service: other
+Validation errors: None
+Attempting database insertion
+Statement prepared successfully
+Parameters bound to statement
+Execute successful! Data inserted with ID: 4
+
+Script started at 2025-03-27 10:17:12
+Database connection included
+Database connection successful
+Not a POST request, redirecting to homepage
+
+Script started at 2025-03-27 10:17:32
+Database connection included
+Database connection successful
+Not a POST request, redirecting to homepage
+
+Script started at 2025-03-27 10:18:41
+Database connection included
+Database connection successful
+POST method detected
+POST data: Array
+(
+    [name] => Test User
+    [email] => test@example.com
+    [phone] => 123456789
+    [service] => cv_writing
+    [message] => This is a test message for debugging purposes.
+)
+
+Sanitized inputs - Name: Test User, Email: test@example.com, Phone: 123456789, Service: cv_writing
+Validation errors: None
+Attempting database insertion
+Statement prepared successfully
+Parameters bound to statement
+Execute successful! Data inserted with ID: 5
+

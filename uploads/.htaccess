@@ -1,5 +1,20 @@
-Deny from all
-<Files ~ "^.*$">
+# Disable directory listing
+Options -Indexes
+
+# Allow access to files
+<FilesMatch "\.(jpg|jpeg|png|gif|pdf)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Deny access to PHP files
+<FilesMatch "\.php$">
     Order Allow,Deny
     Deny from all
+</FilesMatch>
+
+# Allow index.php
+<Files "index.php">
+    Order Allow,Deny
+    Allow from all
 </Files>

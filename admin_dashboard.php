@@ -12,11 +12,6 @@ if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     header("location: access_denied.php");
     exit;
 }
-// Include header file
-$includesPath = __DIR__ . '/includes/';
-if (file_exists($includesPath . 'header.php')) {
-    include $includesPath . 'header.php';
-}
 
 // Get admin information (mock data - replace with actual database query)
 $adminInfo = [
@@ -32,222 +27,12 @@ $totalUsers = 245;
 $newUsersToday = 12;
 $pendingApplicants = 38;
 $systemAlerts = 5;
-?>
 
-<!-- Embedded CSS -->
-<style>
-    /* Dashboard specific styles */
-    .dashboard-card {
-        transition: transform 0.3s, box-shadow 0.3s;
-        border-radius: 8px;
-        overflow: hidden;
-        margin-bottom: 20px;
-        border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    .dashboard-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .dashboard-icon {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-        color: #3498db;
-    }
-    
-    .stats-card {
-        border-left: 4px solid;
-        transition: all 0.3s;
-    }
-    
-    .stats-card:hover {
-        transform: scale(1.03);
-    }
-    
-    .stats-card.primary {
-        border-left-color: #3498db;
-    }
-    
-    .stats-card.success {
-        border-left-color: #2ecc71;
-    }
-    
-    .stats-card.warning {
-        border-left-color: #f39c12;
-    }
-    
-    .stats-card.danger {
-        border-left-color: #e74c3c;
-    }
-    
-    .admin-profile {
-        padding: 20px;
-        background: linear-gradient(135deg, #3498db, #1abc9c);
-        color: white;
-        border-radius: 8px;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .admin-profile::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('assets/img/pattern.svg');
-        opacity: 0.1;
-    }
-    
-    .profile-img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 3px solid white;
-        object-fit: cover;
-        transition: transform 0.3s;
-    }
-    
-    .profile-img:hover {
-        transform: scale(1.1);
-    }
-    
-    .welcome-text {
-        animation: fadeInUp 1s ease-out;
-    }
-    
-    .stat-number {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #34495e;
-    }
-    
-    .notification-badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background-color: #e74c3c;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: bold;
-    }
-    
-    .activity-item {
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
-        transition: background-color 0.3s;
-    }
-    
-    .activity-item:hover {
-        background-color: #f8f9fa;
-    }
-    
-    .activity-item:last-child {
-        border-bottom: none;
-    }
-    
-    .activity-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 8px;
-    }
-    
-    .dot-success {
-        background-color: #2ecc71;
-    }
-    
-    .dot-warning {
-        background-color: #f39c12;
-    }
-    
-    .dot-danger {
-        background-color: #e74c3c;
-    }
-    
-    .dot-info {
-        background-color: #3498db;
-    }
-    
-    .typed-text {
-        color: #3498db;
-        font-weight: bold;
-    }
-    
-    .chart-container {
-        position: relative;
-        height: 250px;
-        margin-bottom: 20px;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
-    
-    .menu-card {
-        cursor: pointer;
-        animation: fadeIn 0.8s;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    .system-alert {
-        animation: pulse 2s infinite;
-    }
-    
-    .page-title {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
-    
-    .page-title::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 50px;
-        height: 3px;
-        background-color: #3498db;
-        transition: width 0.3s;
-    }
-    
-    .page-title:hover::after {
-        width: 100%;
-    }
-</style>
+// Include header file
+$includesPath = __DIR__ . '/includes/';
+$pageTitle = "Admin Dashboard";
+require_once($includesPath . 'admin_header.php');
+?>
 
 <div class="container-fluid mt-4">
     <!-- Welcome Banner with Typing Effect -->
@@ -255,7 +40,7 @@ $systemAlerts = 5;
         <div class="col-md-12">
             <div class="card dashboard-card">
                 <div class="card-body">
-                    <h2 class="welcome-text">Welcome back, <span class="typed-text" id="adminName"></span></h2>
+                    <h2 class="welcome-text">Welcome back, <span class="typed-text" id="adminName" data-name="<?php echo htmlspecialchars($adminInfo['name']); ?>"></span></h2>
                     <p class="text-muted">Today is <?php echo date('l, F j, Y'); ?> | Last login: <?php echo $adminInfo['lastLogin']; ?></p>
                 </div>
             </div>
@@ -284,11 +69,14 @@ $systemAlerts = 5;
                 </div>
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush">
-                        <a href="dashboard.php" class="list-group-item list-group-item-action active">
+                        <a href="admin_dashboard.php" class="list-group-item list-group-item-action active">
                             <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                         </a>
                         <a href="manage_users.php" class="list-group-item list-group-item-action">
                             <i class="fas fa-users me-2"></i> User Management
+                        </a>
+                        <a href="manage_students.php" class="list-group-item list-group-item-action">
+                            <i class="fas fa-user-graduate me-2"></i> Student Management
                         </a>
                         <a href="view_applicants.php" class="list-group-item list-group-item-action">
                             <i class="fas fa-user-graduate me-2"></i> Applicants
@@ -300,6 +88,26 @@ $systemAlerts = 5;
                             <i class="fas fa-cogs me-2"></i> System Settings
                         </a>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Task Management Widget -->
+            <div class="card dashboard-card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-tasks"></i> Task Management</h5>
+                </div>
+                <div class="card-body">
+                    <form id="taskForm" class="mb-3">
+                        <div class="input-group">
+                            <input type="text" id="newTask" class="form-control" placeholder="Add new task...">
+                            <button class="btn btn-info" type="submit">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <ul id="taskList" class="task-list">
+                        <!-- Tasks will be added here dynamically -->
+                    </ul>
                 </div>
             </div>
             
@@ -428,27 +236,58 @@ $systemAlerts = 5;
                 </div>
             </div>
             
+            <!-- Feature Cards Row -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="feature-card bg-gradient-primary" data-link="manage_users.php">
+                        <div class="feature-card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="feature-card-title">User Management</h4>
+                        <p class="feature-card-text">Manage system users and their permissions</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card bg-gradient-success" data-link="manage_students.php">
+                        <div class="feature-card-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4 class="feature-card-title">Student Management</h4>
+                        <p class="feature-card-text">Manage student records and information</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card bg-gradient-warning" data-link="file_upload.php">
+                        <div class="feature-card-icon">
+                            <i class="fas fa-file-upload"></i>
+                        </div>
+                        <h4 class="feature-card-title">File Management</h4>
+                        <p class="feature-card-text">Upload and manage system files</p>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Main Cards Row -->
             <div class="row">
-                <!-- User Management Card -->
+                <!-- Student Management Card -->
                 <div class="col-md-6">
                     <div class="card dashboard-card menu-card">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="bg-primary text-white p-3 rounded me-3">
-                                    <i class="fas fa-users fa-2x"></i>
+                                <div class="bg-success text-white p-3 rounded me-3">
+                                    <i class="fas fa-user-graduate fa-2x"></i>
                                 </div>
                                 <div>
-                                    <h4 class="card-title">User Management</h4>
-                                    <p class="card-text text-muted">Manage system users with admin privileges</p>
+                                    <h4 class="card-title">Student Management</h4>
+                                    <p class="card-text text-muted">Manage student records and information</p>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between mt-3">
-                                <a href="manage_users.php" class="btn btn-primary">
-                                    <i class="fas fa-eye me-1"></i> View Users
+                                <a href="manage_students.php" class="btn btn-success">
+                                    <i class="fas fa-eye me-1"></i> View Students
                                 </a>
-                                <a href="add_user.php" class="btn btn-outline-primary">
-                                    <i class="fas fa-plus me-1"></i> Add User
+                                <a href="add_student.php" class="btn btn-outline-success">
+                                    <i class="fas fa-plus me-1"></i> Add Student
                                 </a>
                             </div>
                         </div>
@@ -459,7 +298,7 @@ $systemAlerts = 5;
                     <div class="card dashboard-card menu-card">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="bg-success text-white p-3 rounded me-3">
+                                <div class="bg-primary text-white p-3 rounded me-3">
                                     <i class="fas fa-user-graduate fa-2x"></i>
                                 </div>
                                 <div>
@@ -468,10 +307,10 @@ $systemAlerts = 5;
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between mt-3">
-                                <a href="view_applicants.php" class="btn btn-success">
+                                <a href="view_applicants.php" class="btn btn-primary">
                                     <i class="fas fa-eye me-1"></i> View Applicants
                                 </a>
-                                <a href="export_applicants.php" class="btn btn-outline-success">
+                                <a href="export_applicants.php" class="btn btn-outline-primary">
                                     <i class="fas fa-file-export me-1"></i> Export Data
                                 </a>
                             </div>
@@ -480,13 +319,92 @@ $systemAlerts = 5;
                 </div>
             </div>
 
+            <!-- File Upload Section -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card dashboard-card">
+                        <div class="card-header">
+                            <h5 class="page-title">File Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#fileUploadModal">
+                                <i class="fas fa-upload me-2"></i>Upload New File
+                            </button>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>File Name</th>
+                                            <th>Type</th>
+                                            <th>Size</th>
+                                            <th>Uploaded</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filesList">
+                                        <!-- Files will be loaded dynamically via AJAX -->
+                                        <tr>
+                                            <td colspan="5" class="text-center">Loading files...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calendar and Recent Activity Row -->
+            <div class="row mt-4">
+                <div class="col-md-5">
+                    <div class="card dashboard-card">
+                        <div class="card-header">
+                            <h5 class="page-title">Calendar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="adminCalendar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-7">
+                    <div class="card dashboard-card">
+                        <div class="card-header">
+                            <h5 class="page-title">Recent Activity</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="activity-item p-3">
+                                <span class="activity-dot dot-success"></span>
+                                <strong>John Doe</strong> created a new account
+                                <small class="text-muted float-end">2 mins ago</small>
+                            </div>
+                            <div class="activity-item p-3">
+                                <span class="activity-dot dot-info"></span>
+                                <strong>Sarah Smith</strong> updated applicant status
+                                <small class="text-muted float-end">45 mins ago</small>
+                            </div>
+                            <div class="activity-item p-3">
+                                <span class="activity-dot dot-warning"></span>
+                                <strong>System</strong> backup completed
+                                <small class="text-muted float-end">1 hour ago</small>
+                            </div>
+                            <div class="activity-item p-3">
+                                <span class="activity-dot dot-danger"></span>
+                                <strong>Admin</strong> deleted user account
+                                <small class="text-muted float-end">2 hours ago</small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="activity_log.php" class="btn btn-sm btn-outline-primary w-100">View All Activity</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <?php
-// Add this to your existing admin_dashboard.php
-// Ensure you have proper session and admin authentication at the top of the file
-
-// Add this modal to your HTML
-?>
 <!-- File Upload Modal -->
 <div class="modal fade" id="fileUploadModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -522,266 +440,56 @@ $systemAlerts = 5;
     </div>
 </div>
 
-<!-- JavaScript for File Upload -->
+<!-- Dark Mode Toggle -->
+<div class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon"></i>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const fileUploadForm = document.getElementById('fileUploadForm');
-    const uploadFeedback = document.getElementById('uploadFeedback');
-
-    fileUploadForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(fileUploadForm);
-
-        fetch('file_upload.php', {
+document.getElementById('taskForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const newTask = document.getElementById('newTask').value;
+    if (newTask) {
+        fetch('add_task.php', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ task: newTask })
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
-                uploadFeedback.innerHTML = `
-                    <div class="alert alert-success">
-                        ${data.message}
-                    </div>
-                `;
-                // Reset form and close modal
-                fileUploadForm.reset();
-                
-                // Optional: Refresh file list or show uploaded file
-                // You might want to add a function to update file list dynamically
+            if (data.success) {
+                const taskList = document.getElementById('taskList');
+                const newTaskItem = document.createElement('li');
+                newTaskItem.textContent = newTask;
+                taskList.appendChild(newTaskItem);
+                document.getElementById('newTask').value = '';
             } else {
-                uploadFeedback.innerHTML = `
-                    <div class="alert alert-danger">
-                        ${data.message}
-                    </div>
-                `;
+                alert('Failed to add task');
             }
         })
-        .catch(error => {
-            uploadFeedback.innerHTML = `
-                <div class="alert alert-danger">
-                    An error occurred: ${error.message}
-                </div>
-            `;
-        });
-    });
+        .catch(error => console.error('Error:', error));
+    }
+});
+
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch('update_profile.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Profile updated successfully');
+        } else {
+            alert('Failed to update profile');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 });
 </script>
 
-<!-- Add this button to your dashboard layout -->
-<div class="container">
-    <div class="row mb-3">
-        <div class="col-12">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fileUploadModal">
-                <i class="fas fa-upload me-2"></i>Upload New File
-            </button>
-        </div>
-    </div>
-</div>
-
-            
-            <!-- Recent Activity and System Information Row -->
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card dashboard-card">
-                        <div class="card-header">
-                            <h5 class="page-title">Recent Activity</h5>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="activity-item p-3">
-                                <span class="activity-dot dot-success"></span>
-                                <strong>John Doe</strong> created a new account
-                                <small class="text-muted float-end">2 mins ago</small>
-                            </div>
-                            <div class="activity-item p-3">
-                                <span class="activity-dot dot-info"></span>
-                                <strong>Sarah Smith</strong> updated applicant status
-                                <small class="text-muted float-end">45 mins ago</small>
-                            </div>
-                            <div class="activity-item p-3">
-                                <span class="activity-dot dot-warning"></span>
-                                <strong>System</strong> backup completed
-                                <small class="text-muted float-end">1 hour ago</small>
-                            </div>
-                            <div class="activity-item p-3">
-                                <span class="activity-dot dot-danger"></span>
-                                <strong>Admin</strong> deleted user account
-                                <small class="text-muted float-end">2 hours ago</small>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <a href="activity_log.php" class="btn btn-sm btn-outline-primary w-100">View All Activity</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card dashboard-card">
-                        <div class="card-header">
-                            <h5 class="page-title">System Information</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-3">
-                                <span>Server Status:</span>
-                                <span class="badge bg-success">Online</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-3">
-                                <span>Database:</span>
-                                <span class="badge bg-info">Healthy</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-3">
-                                <span>Storage:</span>
-                                <div class="progress w-50" style="height: 8px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span>75%</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-3">
-                                <span>Last Backup:</span>
-                                <span>March 2, 2025 05:30 AM</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>System Version:</span>
-                                <span>v2.5.3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- JavaScript Section -->
-<script>
-// Typing effect for admin name
-document.addEventListener('DOMContentLoaded', function() {
-    const adminName = "<?php echo $adminInfo['name']; ?>";
-    let i = 0;
-    const speed = 100; // typing speed
-    const nameElement = document.getElementById('adminName');
-    
-    function typeWriter() {
-        if (i < adminName.length) {
-            nameElement.innerHTML += adminName.charAt(i);
-            i++;
-            setTimeout(typeWriter, speed);
-        }
-    }
-    
-    typeWriter();
-    
-    // Initialize charts
-    initCharts();
-    
-    // Add hover animations to menu cards
-    const menuCards = document.querySelectorAll('.menu-card');
-    menuCards.forEach(card => {
-        card.addEventListener('mouseover', function() {
-            this.classList.add('shadow-lg');
-        });
-        
-        card.addEventListener('mouseout', function() {
-            this.classList.remove('shadow-lg');
-        });
-    });
-});
-
-// Function to initialize charts
-function initCharts() {
-    // Load Chart.js from CDN if not already loaded
-    if (typeof Chart === 'undefined') {
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js';
-        script.onload = createCharts;
-        document.head.appendChild(script);
-    } else {
-        createCharts();
-    }
-}
-
-function createCharts() {
-    // User activity chart (line chart)
-    const activityCtx = document.getElementById('activityChart').getContext('2d');
-    const activityChart = new Chart(activityCtx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'New Users',
-                data: [65, 59, 80, 81, 56, 55],
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                tension: 0.4,
-                fill: true
-            }, {
-                label: 'Active Users',
-                data: [28, 48, 40, 19, 86, 27],
-                borderColor: '#2ecc71',
-                backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            animation: {
-                duration: 2000,
-                easing: 'easeOutQuart'
-            }
-        }
-    });
-
-    // User types chart (doughnut chart)
-    const userTypesCtx = document.getElementById('userTypesChart').getContext('2d');
-    const userTypesChart = new Chart(userTypesCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Admin', 'Staff', 'Applicants', 'Guests'],
-            datasets: [{
-                data: [15, 30, 45, 10],
-                backgroundColor: [
-                    '#3498db',
-                    '#2ecc71',
-                    '#f39c12',
-                    '#e74c3c'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            },
-            animation: {
-                animateRotate: true,
-                animateScale: true,
-                duration: 2000,
-                easing: 'easeOutBounce'
-            }
-        }
-    });
-}
-</script>
-
-<?php
-// Include footer file
-if (file_exists($includesPath . 'footer.php')) {
-    include $includesPath . 'footer.php';
-}
-?>
+<?php require_once($includesPath . 'admin_footer.php'); ?>

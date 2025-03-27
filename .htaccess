@@ -1,0 +1,35 @@
+# Enable cross-origin resource sharing
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+    
+    # Handle OPTIONS method for preflight requests
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+
+# PHP settings
+<IfModule mod_php7.c>
+    php_flag display_errors On
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 256M
+    php_value post_max_size 64M
+    php_value upload_max_filesize 64M
+</IfModule>
+
+# Enable XSendFile if available
+<IfModule mod_xsendfile.c>
+    XSendFile On
+</IfModule>
+
+# Allow HTTP methods
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Allow all HTTP methods for API endpoints
+    RewriteCond %{REQUEST_URI} ^/backend/api/
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule> 

@@ -1,0 +1,112 @@
+2025-03-26 13:27:28 - Request received
+Raw data: {"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy6846@example.com","grade_level":"11th","admission_date":"2023-01-01"}
+Response status: 200
+Response:  {"success":false,"message":"Error checking existing records: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'registration_system.students' doesn't exist"}
+2025-03-26 13:28:12 - Request received
+Raw data: {"first_name":"Obel","last_name":"NDAYSHIMIYE","reg_number":"33284738783","pin":"54321","dob":"2025-03-06","gender":"male","email":"diano21@gmail.com","phone":"0795229499","address":"","institution":"","grade_level":"11th","admission_date":"2025-03-13","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Error checking existing records: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'registration_system.students' doesn't exist"}
+2025-03-26 13:35:58 - Request received
+Raw data: {"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy5658@example.com","grade_level":"11th","admission_date":"2023-01-01"}
+Response status: 200
+Response:  {"success":false,"message":"Error checking existing records: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'registration_system.students' doesn't exist"}
+2025-03-26 13:36:52 - Request received
+Raw data: {"first_name":"UWITIJE","last_name":"TUYISHIMIRE","reg_number":"576575887","pin":"657657","dob":"2025-02-24","gender":"female","email":"uwitije461@gmail.com","phone":"0734656674","address":"Kigali-nyarugenge","institution":"UR","grade_level":"10th","admission_date":"2025-03-05","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":"uwitije461@gmail.com"}
+Response status: 200
+Response:  {"success":false,"message":"Error checking existing records: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'registration_system.students' doesn't exist"}
+2025-03-26 13:40:45 - Request received
+Raw data: {"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy844@example.com","grade_level":"11th","admission_date":"2023-01-01"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"2"} 
+2025-03-26 13:41:44 - Request received
+Raw data: {"first_name":"Alice","last_name":"murekeyison","reg_number":"3367352753","pin":"54332","dob":"2025-03-28","gender":"female","email":"alicemurekeyi21@gmail.com","phone":"0787565441","address":"KN-25","institution":"","grade_level":"9th","admission_date":"2025-03-21","status":"Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"3"} 
+2025-03-26 13:43:50 - Request received
+Raw data: {"first_name":"Obel","last_name":"ISHIMWE","reg_number":"33284738783","pin":"7675","dob":"2025-02-26","gender":"male","email":"josuentahinduka14@gmail.com","phone":"0781028436","address":"","institution":"","grade_level":"7th","admission_date":"2025-03-13","status":"Not Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"4"} 
+2025-03-26 14:17:55 - Request received
+Raw data: {"first_name":"Esron","last_name":"TUYISHIME","reg_number":"222005571","password":"34621","dob":"2000-06-12","gender":"male","email":"ephrontuyishime21@gmail.com","phone":"0734733221","address":"","institution":"","grade_level":"3","admission_date":"2022-06-12","status":"Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Error registering student: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password' in 'field list'","query_error":"#0 D:\\Xampp App\\htdocs\\Edujobs_scholars\\backend\\api\\students_create.php(159): PDO->prepare('\\r\\n        INSER...')\n#1 {main}"} 
+2025-03-26 14:24:10 - Request received
+Raw data: {"first_name":"Esron","last_name":"TUYISHIME","reg_number":"222005571","password":"34621","dob":"2000-06-12","gender":"male","email":"ephrontuyishime21@gmail.com","phone":"0734733221","address":"","institution":"","grade_level":"3","admission_date":"2022-06-12","status":"Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"5"} 
+2025-03-26 14:24:35 - Request received
+Raw data: {"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy7027@example.com","grade_level":"11th","admission_date":"2023-01-01"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy7027@example.com","grade_level":"11th","admission_date":"2023-01-01"}}
+2025-03-26 14:51:41 - Request received
+Raw data: {"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy9733@example.com","grade_level":"11th","admission_date":"2023-01-01"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy9733@example.com","grade_level":"11th","admission_date":"2023-01-01"}}
+2025-03-26 14:57:08 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}}
+2025-03-26 14:57:55 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}}
+2025-03-26 15:00:52 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}}
+2025-03-26 15:01:12 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200370071263032","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi-Gahana-Cyegera","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200370071263032","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}}
+2025-03-26 15:01:35 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200370071263032","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200370071263032","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}}
+2025-03-26 15:01:58 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Admitted","national_id":"1200370071263032","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Admitted","national_id":"1200370071263032","parent_name":"Emmanuel NDAYISABA","parent_phone":"0787846344","parent_email":"iyamuduhayemarha@gmail.com"}}
+2025-03-26 15:04:12 - Request received
+Raw data: {"first_name":"Marthe ","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe ","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":""}}
+2025-03-26 15:04:38 - Request received
+Raw data: {"first_name":"Marthe ","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200370042436110","parent_name":"Elie","parent_phone":"0729201422","parent_email":"elie21@gmail.com"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Marthe ","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200370042436110","parent_name":"Elie","parent_phone":"0729201422","parent_email":"elie21@gmail.com"}}
+2025-03-26 15:04:52 - Request received
+Raw data: {"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy5573@example.com","grade_level":"11th","admission_date":"2023-01-01"}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Proxy","last_name":"Test","dob":"2000-01-01","gender":"female","email":"proxy5573@example.com","grade_level":"11th","admission_date":"2023-01-01"}}
+2025-03-26 15:09:22 - Request received
+Raw data: {"first_name":"Alice","last_name":"murekeyison","reg_number":"3367352753","pin":"IUYTRS","dob":"2025-02-26","gender":"female","email":"alicemurekeyi21@gmail.com","phone":"0787565441","address":"KN-25","institution":"","grade_level":"1","admission_date":"2025-03-06","status":"Not Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Alice","last_name":"murekeyison","reg_number":"3367352753","pin":"IUYTRS","dob":"2025-02-26","gender":"female","email":"alicemurekeyi21@gmail.com","phone":"0787565441","address":"KN-25","institution":"","grade_level":"1","admission_date":"2025-03-06","status":"Not Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}}
+2025-03-26 15:10:41 - Request received
+Raw data: {"first_name":"Alice","last_name":"murekeyison","reg_number":"3367352753","pin":"KJHGF","dob":"2025-03-05","gender":"female","email":"alicemurekeyi21@gmail.com","phone":"0787565441","address":"KN-25","institution":"","grade_level":"2","admission_date":"2025-03-13","status":"Not Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}
+Response status: 200
+Response:  {"success":false,"message":"Required fields are missing. Please provide all required information.","received_data":{"first_name":"Alice","last_name":"murekeyison","reg_number":"3367352753","pin":"KJHGF","dob":"2025-03-05","gender":"female","email":"alicemurekeyi21@gmail.com","phone":"0787565441","address":"KN-25","institution":"","grade_level":"2","admission_date":"2025-03-13","status":"Not Admitted","national_id":"","parent_name":"","parent_phone":"","parent_email":""}}
+2025-03-26 15:19:37 - Request received
+Raw data: {"first_name":"Marthe","last_name":"IYAMUDUHAYE","reg_number":"25RP06988","pin":"Marthe21%","dob":"2003-12-16","gender":"female","email":"iyamuduhayemarha@gmail.com","phone":"0728987374","address":"Huye-Kinazi","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":"","password":"Marthe21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"6"} 
+2025-03-26 15:42:54 - Request received
+Raw data: {"first_name":"Renatha","last_name":"UWIZEYIMANA","reg_number":"25RP08217","pin":"Renatha21%","dob":"2003-11-25","gender":"female","email":"renathauwizeyimana3@gmail.com","phone":"079497927","address":"Huye-Mwendo","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":"","password":"Renatha21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"7"} 
+2025-03-27 09:37:31 - Request received
+Raw data: {"first_name":"Diane","last_name":"ISHIMWE","reg_number":"25RP06988","pin":"Diane21%","dob":"2004-01-01","gender":"female","email":"dishimwe581@gmail.com","phone":"0795944175","address":"Nyamasheke-Rwesero","institution":"RP","grade_level":"1","admission_date":"2025-03-27","status":"Pending","national_id":"1200470205294085","parent_name":"Musabyemungu Gerard","parent_phone":"0780060215","parent_email":"","password":"Diane21%"}
+Response status: 200
+Response:  {"success":false,"message":"This registration number is already in use. Please use a different registration number."}
+2025-03-27 09:37:44 - Request received
+Raw data: {"first_name":"Diane","last_name":"ISHIMWE","reg_number":"25RP069","pin":"Diane21%","dob":"2004-01-01","gender":"female","email":"dishimwe581@gmail.com","phone":"0795944175","address":"Nyamasheke-Rwesero","institution":"RP","grade_level":"1","admission_date":"2025-03-27","status":"Pending","national_id":"1200470205294085","parent_name":"Musabyemungu Gerard","parent_phone":"0780060215","parent_email":"","password":"Diane21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"8"} 
+2025-03-27 09:46:40 - Request received
+Raw data: {"first_name":"Clarisse","last_name":"NIYIGENA","reg_number":"25RP07149","pin":"Clarisse21%","dob":"2004-03-25","gender":"female","email":"clarisseniyigena778@gmail.com","phone":"0793379764","address":"Nyamasheke-kagano-Rwesero","institution":"RP","grade_level":"1","admission_date":"2025-03-24","status":"Pending","national_id":"1200470013242098","parent_name":"HABIMANA Elias","parent_phone":"0786867610","parent_email":"","password":"Clarisse21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"9"} 
+2025-03-27 19:03:07 - Request received
+Raw data: {"first_name":"Leatitia","last_name":"NIYOMUFASHA","reg_number":"25RP","pin":"Leatitia21%","dob":"2003-08-01","gender":"female","email":"niyomufashaleatitia@gmail.com","phone":" 0798342510","address":"","institution":"RP","grade_level":"1","admission_date":"2025-03-27","status":"Pending","national_id":"","parent_name":"","parent_phone":"","parent_email":"","password":"Leatitia21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"10"} 

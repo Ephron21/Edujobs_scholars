@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .response-container {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .test-container {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">API Test Page</h1>
+        <p>This page helps to test the student registration API endpoints.</p>
+        
+        <!-- Test 1: OPTIONS request -->
+        <div class="test-container">
+            <h3>Test 1: OPTIONS Request (CORS Preflight)</h3>
+            <p>Tests if the API endpoint properly handles OPTIONS requests.</p>
+            <button class="btn btn-primary test-options-btn">Run OPTIONS Test</button>
+            <div class="response-container" id="options-response">Results will appear here...</div>
+        </div>
+        
+        <!-- Test 2: POST request -->
+        <div class="test-container">
+            <h3>Test 2: POST Request (Create Student)</h3>
+            <p>Tests if the API endpoint can create a student with test data.</p>
+            <button class="btn btn-success test-post-btn">Run POST Test</button>
+            <div class="response-container" id="post-response">Results will appear here...</div>
+        </div>
+        
+        <!-- Test 3: Proxy Test -->
+        <div class="test-container">
+            <h3>Test 3: Proxy Test</h3>
+            <p>Tests if using the proxy script resolves any CORS or method issues.</p>
+            <button class="btn btn-info test-proxy-btn">Run Proxy Test</button>
+            <div class="response-container" id="proxy-response">Results will appear here...</div>
+        </div>
+        
+        <div class="mt-4">
+            <h2 class="mb-4">API Test Interface</h2>
+            <a href="add_student.php" class="btn btn-secondary">Back to Registration Form</a>
+            <a href="form_alt.html" class="btn btn-outline-secondary ms-2">Alternative Form</a>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Test 1: OPTIONS request
+            document.querySelector('.test-options-btn').addEventListener('click', function() {
+                const responseContainer = document.getElementById('options-response');
+                responseContainer.textContent = 'Sending OPTIONS request...';
+                
+                fetch('backend/api/students_create.php', {
+                    method: 'OPTIONS',
+                    headers: {
+                        'Access-Control-Request-Method': 'POST',
+                        'Access-Control-Request-Headers': 'Content-Type, X-Requested-With'
+                    }
+                })
+                .then(response => {
+                    const headers = {};
+                    response.headers.forEach((value, key) => {
+                        headers[key] = value;
+                    });
+                    
+                    return {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: headers,
+                        ok: response.ok
+                    };
+                })
+                .then(result => {
+                    responseContainer.textContent = 'Response Status: ' + result.status + ' (' + result.statusText + ')\n\n';
+                    responseContainer.textContent += 'Headers:\n' + JSON.stringify(result.headers, null, 2) + '\n\n';
+                    responseContainer.textContent += 'Success: ' + (result.ok ? 'Yes' : 'No');
+                })
+                .catch(error => {
+                    responseContainer.textContent = 'Error: ' + error.message;
+                });
+            });
+            
+            // Test 2: POST request
+            document.querySelector('.test-post-btn').addEventListener('click', function() {
+                const responseContainer = document.getElementById('post-response');
+                responseContainer.textContent = 'Sending POST request...';
+                
+                // Create test data
+                const testData = {
+                    first_name: 'Test',
+                    last_name: 'User',
+                    dob: '2000-01-01',
+                    gender: 'male',
+                    email: 'test' + Math.floor(Math.random() * 10000) + '@example.com',
+                    grade_level: '10th',
+                    admission_date: '2023-01-01'
+                };
+                
+                fetch('backend/api/students_create.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                })
+                .then(response => {
+                    const headers = {};
+                    response.headers.forEach((value, key) => {
+                        headers[key] = value;
+                    });
+                    
+                    return response.text().then(text => {
+                        let jsonResult;
+                        try {
+                            jsonResult = JSON.parse(text);
+                        } catch (e) {
+                            jsonResult = { raw: text };
+                        }
+                        
+                        return {
+                            status: response.status,
+                            statusText: response.statusText,
+                            headers: headers,
+                            data: jsonResult
+                        };
+                    });
+                })
+                .then(result => {
+                    responseContainer.textContent = 'Response Status: ' + result.status + ' (' + result.statusText + ')\n\n';
+                    responseContainer.textContent += 'Headers:\n' + JSON.stringify(result.headers, null, 2) + '\n\n';
+                    responseContainer.textContent += 'Data:\n' + JSON.stringify(result.data, null, 2);
+                })
+                .catch(error => {
+                    responseContainer.textContent = 'Error: ' + error.message;
+                });
+            });
+            
+            // Test 3: Proxy Test
+            document.querySelector('.test-proxy-btn').addEventListener('click', function() {
+                const responseContainer = document.getElementById('proxy-response');
+                responseContainer.textContent = 'Sending request through proxy...';
+                
+                // Create test data
+                const testData = {
+                    first_name: 'Proxy',
+                    last_name: 'Test',
+                    dob: '2000-01-01',
+                    gender: 'female',
+                    email: 'proxy' + Math.floor(Math.random() * 10000) + '@example.com',
+                    grade_level: '11th',
+                    admission_date: '2023-01-01'
+                };
+                
+                fetch('proxy.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                })
+                .then(response => {
+                    return response.text().then(text => {
+                        let jsonResult;
+                        try {
+                            jsonResult = JSON.parse(text);
+                        } catch (e) {
+                            jsonResult = { raw: text };
+                        }
+                        
+                        return {
+                            status: response.status,
+                            statusText: response.statusText,
+                            data: jsonResult
+                        };
+                    });
+                })
+                .then(result => {
+                    responseContainer.textContent = 'Response Status: ' + result.status + ' (' + result.statusText + ')\n\n';
+                    responseContainer.textContent += 'Data:\n' + JSON.stringify(result.data, null, 2);
+                })
+                .catch(error => {
+                    responseContainer.textContent = 'Error: ' + error.message;
+                });
+            });
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
