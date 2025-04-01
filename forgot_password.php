@@ -6,9 +6,46 @@ ini_set('display_errors', 1);
 // Include database connection file
 require_once('config/database.php');
 
-// Check if database connection is established
-if (!isset($conn) || $conn === null) {
-    die("Error: Database connection failed. Please check your database configuration.");
+// PHPMailer configuration
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/PHPMailer/src/Exception.php';
+require 'vendor/PHPMailer/src/PHPMailer.php';
+require 'vendor/PHPMailer/src/SMTP.php';
+
+// Function to send email using PHPMailer
+function sendResetEmail($to, $subject, $message) {
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;  // Enable verbose debug output
+        $mail->isSMTP();                     // Send using SMTP
+        $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;            // Enable SMTP authentication
+        $mail->Username   = 'ephrontuyishime21@gmail.com'; // SMTP username
+        $mail->Password   = 'your-app-password';           // SMTP password (use App Password)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
+        $mail->Port       = 587;             // TCP port to connect to
+
+        // Recipients
+        $mail->setFrom('ephrontuyishime21@gmail.com', 'Edujobs Scholars');
+        $mail->addAddress($to);
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+        $mail->AltBody = strip_tags($message);
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        error_log("Email Error: {$mail->ErrorInfo}");
+        return false;
+    }
 }
 
 // Initialize variables
@@ -51,11 +88,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         mysqli_stmt_bind_param($insert_stmt, "sss", $email, $token, $expires);
 
                         if (mysqli_stmt_execute($insert_stmt)) {
-                            // Construct reset link
-                            $reset_link = "http://localhost/registration_system/reset_password.php?token=" . $token;
+                            // Construct reset link with correct path
+                            $reset_link = "http://localhost/Edujobs_scholars/reset_password.php?token=" . $token;
 
-                            // Simulate email sending (Replace this with actual email functionality)
-                            $success_msg = "Password reset link has been sent to your email: <a href='$reset_link'>$reset_link</a>";
+                            // For debugging - remove in production
+                            error_log("Generated token: " . $token);
+                            error_log("Expiry time: " . $expires);
+
+                            // Email configuration
+                            $to = $email;
+                            $subject = "Password Reset Request";
+                            $message = "Hello,<br><br>";
+                            $message .= "You have requested to reset your password. Click the link below to reset it:<br><br>";
+                            $message .= "<a href='{$reset_link}'>{$reset_link}</a><br><br>";
+                            $message .= "This link will expire in 1 hour.<br><br>";
+                            $message .= "If you did not request this password reset, please ignore this email.<br><br>";
+                            $message .= "Best regards,<br>Edujobs Scholars Team";
+
+                            // Send email using PHPMailer
+                            if(sendResetEmail($to, $subject, $message)) {
+                                $success_msg = "Password reset link has been sent to your email address.";
+                            } else {
+                                $email_err = "Failed to send email. Please try again later.";
+                                // For debugging - remove in production
+                                $success_msg = "Debug mode: Your reset link is: <a href='{$reset_link}'>{$reset_link}</a>";
+                            }
                         } else {
                             $email_err = "Failed to insert reset token. Please try again later.";
                         }

@@ -421,198 +421,37 @@ function deleteFile($conn, $fileId) {
 
 // File upload handler
 function uploadFile($conn) {
-    // Check if user is admin
-    if (!isAdminLoggedIn()) {
-        sendJsonResponse('error', 'Unauthorized access', 403);
+    // Check if it's an AJAX request
+    $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+                     strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
+    // Redirect non-AJAX requests to upload.php
+    if (!$isAjaxRequest) {
+        header('Location: upload.php');
+        exit;
     }
 
-    // Get current user ID
-    $userId = getCurrentUserId();
-    if (!$userId) {
-        sendJsonResponse('error', 'Admin not found', 403);
-    }
-
-    // Check if file was uploaded
-    if (!isset($_FILES['file'])) {
-        sendJsonResponse('error', 'No file uploaded', 400);
-    }
-
-    // Validate additional fields
-    $title = $_POST['title'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $category = $_POST['category'] ?? 'uncategorized';
-    $tags = $_POST['tags'] ?? '';
-    $featured = isset($_POST['featured']) ? 1 : 0;
-    $displayOrder = isset($_POST['display_order']) ? intval($_POST['display_order']) : 0;
+    // For AJAX requests, forward to upload.php
+    $ch = curl_init('upload.php');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
-    if (empty($title)) {
-        sendJsonResponse('error', 'File title is required', 400);
-    }
-
-    $file = $_FILES['file'];
-    $uploadDir = 'uploads/';
-    $thumbnailDir = 'uploads/thumbnails/';
-
-    // Create directories if they don't exist
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
+    if (isset($_FILES['file'])) {
+        $file = $_FILES['file'];
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array_merge($_POST, [
+            'file' => new CURLFile($file['tmp_name'], $file['type'], $file['name'])
+        ]));
     }
     
-    if (!is_dir($thumbnailDir)) {
-        mkdir($thumbnailDir, 0755, true);
-    }
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-    // Validate file
-    $maxFileSize = 50 * 1024 * 1024; // 50MB
-    $allowedTypes = [
-        'image/jpeg' => ['jpg', 'jpeg'], 
-        'image/png' => ['png'], 
-        'image/gif' => ['gif'],
-        'application/pdf' => ['pdf'], 
-        'application/msword' => ['doc'], 
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => ['docx'],
-        'video/mp4' => ['mp4'],
-        'video/mpeg' => ['mpeg', 'mpg'],
-        'application/vnd.ms-excel' => ['xls'],
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => ['xlsx'],
-        'application/vnd.ms-powerpoint' => ['ppt'],
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation' => ['pptx'],
-        'text/plain' => ['txt'],
-        'application/zip' => ['zip'],
-        'application/x-rar-compressed' => ['rar']
-    ];
-
-    // Check file size
-    if ($file['size'] > $maxFileSize) {
-        sendJsonResponse('error', 'File is too large. Maximum size is 50MB', 400);
-    }
-
-    // Check file type
-    // If the mime type detection isn't working, try to determine by extension
-    if (!array_key_exists($file['type'], $allowedTypes)) {
-        // Try to determine type from extension
-        $determinedType = null;
-        foreach ($allowedTypes as $mimeType => $extensions) {
-            if (in_array($fileExtension, $extensions)) {
-                $determinedType = $mimeType;
-                break;
-            }
-        }
-        
-        if ($determinedType) {
-            // Use the determined type
-            $file['type'] = $determinedType;
-        } else {
-            error_log('Invalid file type: ' . $file['type'] . ' with extension: ' . $fileExtension);
-            sendJsonResponse('error', 'Invalid file type. Allowed types: images, PDF, Word, Excel, PowerPoint, videos, and archives', 400);
-        }
-    }
-
-    // Verify file extension against content type
-    $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($fileExtension, $allowedTypes[$file['type']])) {
-        sendJsonResponse('error', 'File extension does not match content type', 400);
-    }
-
-    // Generate a unique filename
-    $uniqueFilename = uniqid('upload_') . '.' . $fileExtension;
-    $uploadPath = $uploadDir . $uniqueFilename;
-
-    // Make sure directories exist
-    $iconsDir = 'assets/icons/';
-    if (!is_dir('assets')) {
-        mkdir('assets', 0755, true);
-    }
-    if (!is_dir($iconsDir)) {
-        mkdir($iconsDir, 0755, true);
-        
-        // Create default icons if they don't exist
-        $defaultIcon = '<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="#cccccc" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path fill="#ffffff" d="M14 3v5h5"/></svg>';
-        file_put_contents($iconsDir . 'file.png', $defaultIcon);
-        
-        $imageIcon = '<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="#3498db" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path fill="#ffffff" d="M14 3v5h5"/><circle fill="#ffffff" cx="10" cy="13" r="2"/><path fill="#ffffff" d="M8 18h8l-2.5-3-1.5 2-1-1z"/></svg>';
-        file_put_contents($iconsDir . 'image.png', $imageIcon);
-        
-        $pdfIcon = '<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="#e74c3c" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path fill="#ffffff" d="M14 3v5h5"/><path fill="#ffffff" d="M9 12h6m-6 2h6m-6 2h4"/></svg>';
-        file_put_contents($iconsDir . 'pdf.png', $pdfIcon);
-    }
-
-    // Move uploaded file
-    if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        $errorMsg = 'File upload failed';
-        // Check if directory is writable
-        if (!is_writable($uploadDir)) {
-            $errorMsg .= ': Upload directory is not writable';
-        }
-        error_log('Upload failed for file: ' . $file['name'] . ' - ' . $errorMsg);
-        sendJsonResponse('error', $errorMsg, 500);
-    }
-    
-    // Initialize thumbnail path
-    $thumbnailPath = null;
-    
-    // Generate thumbnail for images and PDFs
-    if (strpos($file['type'], 'image/') === 0) {
-        try {
-            $thumbnailFilename = 'thumb_' . $uniqueFilename;
-            $thumbnailPath = $thumbnailDir . $thumbnailFilename;
-            if (!generateThumbnail($uploadPath, $thumbnailPath)) {
-                error_log('Failed to generate thumbnail for: ' . $uploadPath);
-                $thumbnailPath = null; // If thumbnail generation fails
-            }
-        } catch (Exception $e) {
-            error_log('Thumbnail generation error: ' . $e->getMessage());
-            $thumbnailPath = null;
-        }
-    } elseif ($file['type'] === 'application/pdf') {
-        try {
-            $thumbnailFilename = 'thumb_' . pathinfo($uniqueFilename, PATHINFO_FILENAME) . '.jpg';
-            $thumbnailPath = $thumbnailDir . $thumbnailFilename;
-            if (!generatePdfThumbnail($uploadPath, $thumbnailPath)) {
-                error_log('Failed to generate PDF thumbnail for: ' . $uploadPath);
-                $thumbnailPath = null; // If thumbnail generation fails
-            }
-        } catch (Exception $e) {
-            error_log('PDF thumbnail generation error: ' . $e->getMessage());
-            $thumbnailPath = null;
-        }
-    }
-
-    // Save file info to database
-    try {
-        $stmt = $conn->prepare("INSERT INTO uploaded_files 
-            (filename, original_name, file_path, file_type, file_size, uploaded_by, 
-            is_public, title, description, category, tags, featured, display_order, thumbnail_path) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        
-        $stmt->execute([
-            $uniqueFilename, 
-            $file['name'], 
-            $uploadPath, 
-            $file['type'], 
-            $file['size'], 
-            $userId,
-            isset($_POST['is_public']) ? 1 : 0,
-            $title,
-            $description,
-            $category,
-            $tags,
-            $featured,
-            $displayOrder,
-            $thumbnailPath
-        ]);
-
-        $fileId = $conn->lastInsertId();
-
-        sendJsonResponse('success', 'File uploaded successfully', 200);
-    } catch (PDOException $e) {
-        // Remove the file if database insertion fails
-        unlink($uploadPath);
-        if ($thumbnailPath && file_exists($thumbnailPath)) {
-            unlink($thumbnailPath);
-        }
-        sendJsonResponse('error', 'Database error: ' . $e->getMessage(), 500);
-    }
+    header('Content-Type: application/json');
+    http_response_code($httpCode);
+    echo $response;
+    exit;
 }
 
 // Check if it's an AJAX upload request
@@ -1229,7 +1068,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     };
     
     // Upload file
-    const uploadFile = (e) => {
+    fileUploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = new FormData(fileUploadForm);
@@ -1247,76 +1086,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         
         // Show progress bar
         uploadProgress.classList.remove('d-none');
+        progressBar.style.width = '0%';
+        uploadPercentage.textContent = '0%';
         
         // Disable upload button
         uploadBtn.disabled = true;
         uploadBtnText.textContent = 'Uploading...';
         uploadSpinner.classList.remove('d-none');
         
-        // Create XMLHttpRequest
-        const xhr = new XMLHttpRequest();
-        
-        // Track upload progress
-        xhr.upload.addEventListener('progress', (e) => {
-            if (e.lengthComputable) {
-                const percentComplete = Math.round((e.loaded / e.total) * 100);
-                progressBar.style.width = percentComplete + '%';
-                uploadPercentage.textContent = percentComplete + '%';
-            }
-        });
-        
-        // Handle response
-        xhr.addEventListener('load', () => {
-            try {
-                const response = JSON.parse(xhr.responseText);
-                
-                if (response.status === 'success') {
-                    showAlert('File uploaded successfully');
-                    fileUploadForm.reset();
-                    uploadProgress.classList.add('d-none');
-                    progressBar.style.width = '0%';
-                    uploadPercentage.textContent = '0%';
-                    
-                    // Remove the file name display
-                    const fileNameDisplay = dropzone.querySelector('.text-primary');
-                    if (fileNameDisplay) {
-                        fileNameDisplay.remove();
-                    }
-                    
-                    // Refresh the files list
-                    loadFiles();
-                } else {
-                    showAlert(response.message || 'Upload failed', 'danger');
+        try {
+            const response = await fetch('upload.php', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
-            } catch (e) {
-                showAlert('An error occurred during upload', 'danger');
-                console.error(e);
+            });
+            
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                showAlert('File uploaded successfully', 'success');
+                fileUploadForm.reset();
+                
+                // Remove the file name display
+                const fileNameDisplay = dropzone.querySelector('.text-primary');
+                if (fileNameDisplay) {
+                    fileNameDisplay.remove();
+                }
+                
+                // Refresh the files list
+                loadFiles();
+            } else {
+                showAlert(data.message || 'Upload failed', 'danger');
             }
-            
-            // Re-enable upload button
-            uploadBtn.disabled = false;
-            uploadBtnText.textContent = 'Upload File';
-            uploadSpinner.classList.add('d-none');
-        });
-        
-        // Handle error
-        xhr.addEventListener('error', () => {
+        } catch (error) {
+            console.error('Error:', error);
             showAlert('An error occurred during upload', 'danger');
-            
-            // Re-enable upload button
-            uploadBtn.disabled = false;
-            uploadBtnText.textContent = 'Upload File';
-            uploadSpinner.classList.add('d-none');
-            
+        } finally {
             // Hide progress bar
             uploadProgress.classList.add('d-none');
-        });
-        
-        // Send the request
-        xhr.open('POST', '', true);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.send(formData);
-    };
+            progressBar.style.width = '0%';
+            uploadPercentage.textContent = '0%';
+            
+            // Re-enable upload button
+            uploadBtn.disabled = false;
+            uploadBtnText.textContent = 'Upload File';
+            uploadSpinner.classList.add('d-none');
+        }
+    });
     
     // Load files from the server
     const loadFiles = () => {
@@ -1593,9 +1411,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     
     // File input change
     fileInput.addEventListener('change', handleFileSelect);
-    
-    // Form submission
-    fileUploadForm.addEventListener('submit', uploadFile);
     
     // Browse button click
     browseBtn.addEventListener('click', () => fileInput.click());

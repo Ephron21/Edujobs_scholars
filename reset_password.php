@@ -17,8 +17,12 @@ $success = false;
 if (isset($_GET['token']) && !empty($_GET['token'])) {
     $token = $_GET['token'];
 
+    // For debugging - remove in production
+    error_log("Received token: " . $token);
+    error_log("Current server time: " . date('Y-m-d H:i:s'));
+
     // Check if token exists and is valid
-    $sql = "SELECT email, expires FROM password_reset WHERE token = ? AND expires > NOW()";
+    $sql = "SELECT email, expires FROM password_reset WHERE token = ?";
     if ($stmt = mysqli_prepare($conn, $sql)) {
         mysqli_stmt_bind_param($stmt, "s", $token);
 
@@ -28,8 +32,18 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
             if (mysqli_stmt_num_rows($stmt) == 1) {
                 mysqli_stmt_bind_result($stmt, $email, $expires);
                 mysqli_stmt_fetch($stmt);
+                
+                // For debugging - remove in production
+                error_log("Found token record - Email: " . $email . ", Expires: " . $expires);
+                
+                // Check if token has expired
+                if (strtotime($expires) < time()) {
+                    $token_err = "This password reset link has expired. Please request a new one.";
+                    error_log("Token expired. Expiry time: " . $expires . ", Current time: " . date('Y-m-d H:i:s'));
+                }
             } else {
                 $token_err = "This password reset link is invalid or has expired.";
+                error_log("No token found in database");
             }
         } else {
             echo "Oops! Something went wrong. Please try again later.";
