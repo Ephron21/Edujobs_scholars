@@ -158,3 +158,19 @@ Response:  {"success":false,"message":"This registration number is already in us
 Raw data: {"first_name":"Rosine","last_name":"MUSABE","reg_number":"25RP9","pin":"Rosine21%","dob":"2002-04-29","gender":"female","email":"zamdahmusabe@gmail.com","phone":"0793611571","address":"Huye-Rusatira-Buhimba-Gasaka","institution":"RP","grade_level":"1","admission_date":"2025-03-31","status":"Pending","national_id":"1200270020338052","parent_name":"Haziza Emertha","parent_phone":"0781884879","parent_email":"","password":"Rosine21%"}
 Response status: 200
 Response:  {"success":true,"message":"Student registered successfully!","student_id":"18"} 
+2025-04-01 14:40:47 - Request received
+Raw data: {"first_name":"Aline","last_name":"UWITIJE","reg_number":"25RP08247","pin":"Uwitije21%","dob":"2002-01-01","gender":"female","email":"uwitije461@gmail.com","phone":"0734656674","address":"Huye-Kinazi-Gahana-Gihana","institution":"RP","grade_level":"1","admission_date":"2025-04-01","status":"Pending","national_id":"1200270155126027","parent_name":"","parent_phone":"","parent_email":"","password":"Uwitije21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"19"} 
+2025-04-03 14:15:14 - Request received
+Raw data: {"first_name":"Shemsa","last_name":"IRAKOZE","reg_number":"25RP13729","pin":"Shemsa21%","dob":"2003-01-01","gender":"female","email":"Shemsairakoze2@gmail.com","phone":"0787365857 ","address":"Huye-Kinazi-Byinza-Rwerinka","institution":"RP","grade_level":"1","admission_date":"2025-04-03","status":"Pending","national_id":"1200370010689050","parent_name":" mukakarisa Beatrice","parent_phone":"0734863152","parent_email":"","password":"Shemsa21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"20"} 
+2025-04-03 20:14:49 - Request received
+Raw data: {"first_name":"Jeanne","last_name":"NYIRANDAHIRIWE","reg_number":"25","pin":"Jeanne21%","dob":"2000-01-01","gender":"female","email":"ndahiriwejeanne@gmail.com","phone":"0783084063","address":"Huye-Rusatira-Buhimba-Rugarama","institution":"RP","grade_level":"1","admission_date":"2025-04-03","status":"Pending","national_id":"1200070082542032","parent_name":"Mukabugingo Aurerie","parent_phone":"           0787694787","parent_email":"","password":"Jeanne21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"21"} 
+2025-04-03 21:35:37 - Request received
+Raw data: {"first_name":"Emmanuel","last_name":"NTAWUHIGANAYO","reg_number":"25RP14069","pin":"Emmanuel21%","dob":"1999-01-01","gender":"male","email":"ntawuhiganayoemmanuel999@gmail.com","phone":"0791308193","address":"Nyanza-Muyira-Nyamure-Gituza","institution":"RP","grade_level":"1","admission_date":"2025-04-03","status":"Pending","national_id":"1200070082542032","parent_name":"RUKERIBUGA Innocent","parent_phone":"0724643969","parent_email":"","password":"Emmanuel21%"}
+Response status: 200
+Response:  {"success":true,"message":"Student registered successfully!","student_id":"22"} 

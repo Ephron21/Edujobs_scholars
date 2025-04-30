@@ -1,9 +1,9 @@
 {
-    "theme_color": "#0d6efd",
-    "secondary_color": "#6c757d",
+    "theme_color": "#02deed",
+    "secondary_color": "#ebef25",
     "enable_dark_mode": true,
-    "logo_path": "uploads\/appearance\/logo_1743087179.jpg",
-    "favicon_path": "",
-    "updated_at": "2025-03-27 15:52:59",
+    "logo_path": "uploads\/appearance\/logo_1746015047.png",
+    "favicon_path": "uploads\/appearance\/favicon_1746015047.png",
+    "updated_at": "2025-04-30 14:10:47",
     "updated_by": 2
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .card {
+            width: 85.6mm;
+            height: 53.98mm;
+            border: 1px solid #ccc;
+            padding: 5mm;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .school-logo {
+            position: absolute;
+            top: 5mm;
+            left: 5mm;
+            width: 20mm;
+            height: 20mm;
+        }
+        .student-photo {
+            position: absolute;
+            top: 5mm;
+            right: 5mm;
+            width: 25mm;
+            height: 25mm;
+            border: 1px solid #ccc;
+        }
+        .card-header {
+            text-align: center;
+            margin-top: 5mm;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+        .card-content {
+            margin-top: 5mm;
+            font-size: 7pt;
+        }
+        .card-footer {
+            position: absolute;
+            bottom: 5mm;
+            width: calc(100% - 10mm);
+            text-align: center;
+            font-size: 6pt;
+        }
+        .barcode {
+            margin-top: 2mm;
+            text-align: center;
+            font-family: 'Libre Barcode 128', cursive;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="school_logo.png" class="school-logo" alt="School Logo">
+        <img src="student_photo.jpg" class="student-photo" alt="Student Photo">
+        <div class="card-header">STUDENT ID CARD</div>
+        <div class="card-content">
+            <p><strong>Name:</strong> {student_name}</p>
+            <p><strong>Admission No:</strong> {admission_number}</p>
+            <p><strong>Class:</strong> {class_name} {section_name}</p>
+            <p><strong>Card No:</strong> {card_number}</p>
+        </div>
+        <div class="barcode">{card_number}</div>
+        <div class="card-footer">
+            This card is the property of {school_name}. If found, please return to the school office.
+        </div>
+    </div>
+</body>
+</html> 

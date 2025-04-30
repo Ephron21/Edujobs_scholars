@@ -1,0 +1,45 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+*.txt
+maintenance_mode.log
+appearance_settings.log
+proxy_log.txt
+consultation_debug.log
+file_access_log.txt
+
+# Backup files
+/backups/
+*.backup
+*.bak
+*_backup.php
+
+# Test files
+*_test.php
+test_*.php
+api_test.html
+test_form.php
+test_upload.php
+direct_test.php
+
+# Uploads
+/uploads/
+*.zip
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db 

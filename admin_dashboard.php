@@ -78,6 +78,9 @@ require_once($includesPath . 'admin_header.php');
                         <a href="manage_students.php" class="list-group-item list-group-item-action">
                             <i class="fas fa-user-graduate me-2"></i> Student Management
                         </a>
+                        <a href="manage_reports.php" class="list-group-item list-group-item-action">
+                            <i class="fas fa-file-alt me-2"></i> School Reports
+                        </a>
                         <a href="view_applicants.php" class="list-group-item list-group-item-action">
                             <i class="fas fa-user-graduate me-2"></i> Applicants
                         </a>
@@ -238,7 +241,7 @@ require_once($includesPath . 'admin_header.php');
             
             <!-- Feature Cards Row -->
             <div class="row mb-4">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="feature-card bg-gradient-primary" data-link="manage_users.php">
                         <div class="feature-card-icon">
                             <i class="fas fa-users"></i>
@@ -247,7 +250,7 @@ require_once($includesPath . 'admin_header.php');
                         <p class="feature-card-text">Manage system users and their permissions</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="feature-card bg-gradient-success" data-link="manage_students.php">
                         <div class="feature-card-icon">
                             <i class="fas fa-user-graduate"></i>
@@ -256,7 +259,16 @@ require_once($includesPath . 'admin_header.php');
                         <p class="feature-card-text">Manage student records and information</p>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <div class="feature-card bg-gradient-info" data-link="manage_reports.php">
+                        <div class="feature-card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h4 class="feature-card-title">School Reports</h4>
+                        <p class="feature-card-text">Generate and manage student academic reports</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="feature-card bg-gradient-warning" data-link="file_upload.php">
                         <div class="feature-card-icon">
                             <i class="fas fa-file-upload"></i>

@@ -1,11 +1,13 @@
 <?php
-// Initialize the session
+// Ensure no whitespace or output before session_start
 session_start();
+
 // Check if the user is logged in, if not then redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
+
 // Check if the user is an admin
 if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     // Not an admin, redirect to access denied page
@@ -13,10 +15,23 @@ if (!isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
     exit;
 }
 
-// Include header file
-$includesPath = __DIR__ . '/includes/';
-$pageTitle = "System Settings";
-require_once($includesPath . 'admin_header.php');
+// Process maintenance mode toggle
+if (isset($_POST['toggle_maintenance'])) {
+    $maintenance_file = 'maintenance.flag';
+    if (file_exists($maintenance_file)) {
+        unlink($maintenance_file);
+        $maintenance_message = "Maintenance mode disabled successfully!";
+    } else {
+        file_put_contents($maintenance_file, date('Y-m-d H:i:s'));
+        $maintenance_message = "Maintenance mode enabled successfully!";
+    }
+}
+
+// Process cache clearing
+if (isset($_POST['clear_cache'])) {
+    // Add your cache clearing logic here
+    $cache_message = "System cache cleared successfully!";
+}
 
 // Define settings categories and their values (mock data - replace with database query)
 $generalSettings = [
@@ -62,12 +77,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // In a real app, validate and save to database
         $saveSuccess = true;
         $saveMessage = "Security settings saved successfully!";
-    } elseif (isset($_POST['clear_cache'])) {
-        // In a real app, clear cache
-        $saveSuccess = true;
-        $saveMessage = "System cache cleared successfully!";
     }
 }
+
+// Include header file - AFTER all processing
+$pageTitle = "System Settings";
+require_once "includes/admin_header.php";
 ?>
 
 <div class="container-fluid mt-4">
@@ -459,4 +474,4 @@ document.getElementById('toggleMaintenance').addEventListener('click', function(
 });
 </script>
 
-<?php require_once($includesPath . 'admin_footer.php'); ?> 
+<?php require_once "includes/admin_footer.php"; ?> 

@@ -171,7 +171,7 @@ include 'header.php';
         <div class="featured-jobs">
             <h3>Featured Job Opportunities</h3>
             <div class="job-cards">
-                <div class="job-card">
+                <div class="job-card" data-job-id="1">
                     <div class="job-header">
                         <h4>Secondary School Teacher - Mathematics</h4>
                         <span class="job-type">Full-time</span>
@@ -185,12 +185,12 @@ include 'header.php';
                         <p>The Ministry of Education is looking for qualified Mathematics teachers for secondary schools in Kigali.</p>
                     </div>
                     <div class="job-footer">
-                        <a href="#" class="btn btn-sm btn-primary">View Details</a>
-                        <a href="#" class="btn btn-sm btn-secondary">Quick Apply</a>
+                        <button class="btn btn-sm btn-primary view-details-btn">View Details</button>
+                        <button class="btn btn-sm btn-secondary quick-apply-btn">Quick Apply</button>
                     </div>
                 </div>
                 
-                <div class="job-card">
+                <div class="job-card" data-job-id="2">
                     <div class="job-header">
                         <h4>Software Developer</h4>
                         <span class="job-type">Full-time</span>
@@ -204,12 +204,12 @@ include 'header.php';
                         <p>RISA is seeking skilled Software Developers to join their team and contribute to Rwanda's digital transformation.</p>
                     </div>
                     <div class="job-footer">
-                        <a href="#" class="btn btn-sm btn-primary">View Details</a>
-                        <a href="#" class="btn btn-sm btn-secondary">Quick Apply</a>
+                        <button class="btn btn-sm btn-primary view-details-btn">View Details</button>
+                        <button class="btn btn-sm btn-secondary quick-apply-btn">Quick Apply</button>
                     </div>
                 </div>
                 
-                <div class="job-card">
+                <div class="job-card" data-job-id="3">
                     <div class="job-header">
                         <h4>Project Manager</h4>
                         <span class="job-type">Contract</span>
@@ -223,8 +223,8 @@ include 'header.php';
                         <p>UNDP is looking for an experienced Project Manager to oversee development projects in Rwanda.</p>
                     </div>
                     <div class="job-footer">
-                        <a href="#" class="btn btn-sm btn-primary">View Details</a>
-                        <a href="#" class="btn btn-sm btn-secondary">Quick Apply</a>
+                        <button class="btn btn-sm btn-primary view-details-btn">View Details</button>
+                        <button class="btn btn-sm btn-secondary quick-apply-btn">Quick Apply</button>
                     </div>
                 </div>
             </div>
@@ -368,6 +368,452 @@ include 'header.php';
         <p>&copy; 2025 EduJobs Scholars | All Rights Reserved</p>
     </div>
 </div>
+
+<!-- Job Details Modal -->
+<div id="jobDetailsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="jobDetailsContent">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+    </div>
+</div>
+
+<!-- Job Application Modal -->
+<div id="jobApplicationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Job Application Form</h2>
+        <?php if (isset($_SESSION['application_success'])): ?>
+            <div class="alert alert-success">
+                Thank you for your application! We will review it and get back to you soon.
+            </div>
+            <?php unset($_SESSION['application_success']); ?>
+        <?php endif; ?>
+        
+        <?php if (isset($_SESSION['application_error'])): ?>
+            <div class="alert alert-danger">
+                <?php echo $_SESSION['application_error']; ?>
+            </div>
+            <?php unset($_SESSION['application_error']); ?>
+        <?php endif; ?>
+        
+        <form id="jobApplicationForm" action="process_application.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="jobId" name="job_id">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="full_name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="education">Education</label>
+                <textarea id="education" name="education" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="experience">Work Experience</label>
+                <textarea id="experience" name="experience" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cv">Upload CV (PDF)</label>
+                <input type="file" id="cv" name="cv" accept=".pdf" required>
+                <small class="form-text text-muted">Maximum file size: 5MB</small>
+            </div>
+            <div class="form-group">
+                <label for="coverLetter">Cover Letter</label>
+                <textarea id="coverLetter" name="cover_letter" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+        </form>
+    </div>
+</div>
+
+<!-- Add this before the closing body tag -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 800px;
+        border-radius: 8px;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .close-modal {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s;
+    }
+
+    .close-modal:hover {
+        color: #000;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .form-group textarea {
+        height: 120px;
+        resize: vertical;
+    }
+
+    .job-info {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .job-info p {
+        margin: 8px 0;
+    }
+
+    .job-requirements,
+    .job-responsibilities,
+    .job-benefits {
+        margin: 20px 0;
+    }
+
+    .job-requirements ul,
+    .job-responsibilities ul,
+    .job-benefits ul {
+        padding-left: 20px;
+    }
+
+    .job-requirements li,
+    .job-responsibilities li,
+    .job-benefits li {
+        margin: 8px 0;
+        line-height: 1.5;
+    }
+
+    .apply-now-btn {
+        margin-top: 20px;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .modal-content {
+            width: 95%;
+            margin: 10% auto;
+        }
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .form-text {
+        font-size: 0.875em;
+        color: #6c757d;
+        margin-top: 0.25rem;
+    }
+</style>
+
+<script>
+    // Job details data
+    const jobDetails = {
+        1: {
+            title: "Secondary School Teacher - Mathematics",
+            company: "Ministry of Education",
+            location: "Kigali, Rwanda",
+            type: "Full-time",
+            deadline: "June 30, 2023",
+            description: "The Ministry of Education is looking for qualified Mathematics teachers for secondary schools in Kigali. The successful candidate will be responsible for teaching mathematics to secondary school students and contributing to the development of the school's mathematics curriculum.",
+            requirements: [
+                "Bachelor's degree in Mathematics or related field",
+                "Teaching certification",
+                "Minimum 3 years of teaching experience",
+                "Strong communication skills",
+                "Ability to work with diverse student populations",
+                "Proficiency in English and Kinyarwanda",
+                "Experience with modern teaching methods"
+            ],
+            responsibilities: [
+                "Teach Mathematics to secondary school students",
+                "Develop lesson plans and assessments",
+                "Participate in faculty meetings",
+                "Maintain student records",
+                "Communicate with parents",
+                "Organize and supervise extracurricular activities",
+                "Contribute to curriculum development"
+            ],
+            benefits: [
+                "Competitive salary",
+                "Health insurance",
+                "Professional development opportunities",
+                "Pension plan",
+                "Paid leave",
+                "Housing allowance",
+                "Transportation allowance"
+            ]
+        },
+        2: {
+            title: "Software Developer",
+            company: "Rwanda Information Society Authority",
+            location: "Kigali, Rwanda",
+            type: "Full-time",
+            deadline: "July 15, 2023",
+            description: "RISA is seeking skilled Software Developers to join their team and contribute to Rwanda's digital transformation. The successful candidate will work on developing and maintaining various digital solutions for government services.",
+            requirements: [
+                "Bachelor's degree in Computer Science or related field",
+                "Proficiency in modern programming languages (JavaScript, Python, Java)",
+                "Experience with web development frameworks (React, Node.js, Django)",
+                "Strong problem-solving skills",
+                "Team collaboration experience",
+                "Knowledge of database systems",
+                "Experience with version control (Git)"
+            ],
+            responsibilities: [
+                "Develop and maintain software applications",
+                "Write clean, efficient code",
+                "Participate in code reviews",
+                "Collaborate with team members",
+                "Document technical specifications",
+                "Debug and fix technical issues",
+                "Implement security best practices"
+            ],
+            benefits: [
+                "Competitive salary",
+                "Health insurance",
+                "Training opportunities",
+                "Flexible working hours",
+                "Remote work options",
+                "Annual bonus",
+                "Professional certification support"
+            ]
+        },
+        3: {
+            title: "Project Manager",
+            company: "UNDP Rwanda",
+            location: "Kigali, Rwanda",
+            type: "Contract",
+            deadline: "July 5, 2023",
+            description: "UNDP is looking for an experienced Project Manager to oversee development projects in Rwanda. The successful candidate will manage various development initiatives and ensure their successful implementation.",
+            requirements: [
+                "Master's degree in Project Management or related field",
+                "PMP certification preferred",
+                "5+ years of project management experience",
+                "Strong leadership skills",
+                "Experience with international organizations",
+                "Excellent communication skills",
+                "Proficiency in French and English"
+            ],
+            responsibilities: [
+                "Plan and execute development projects",
+                "Manage project resources",
+                "Monitor project progress",
+                "Coordinate with stakeholders",
+                "Prepare project reports",
+                "Risk management",
+                "Team leadership and mentoring"
+            ],
+            benefits: [
+                "Competitive salary",
+                "International exposure",
+                "Professional development",
+                "Travel opportunities",
+                "Contract renewal possibility",
+                "Health and life insurance",
+                "Annual leave and sick leave"
+            ]
+        }
+    };
+
+    // Modal functionality
+    const jobDetailsModal = document.getElementById('jobDetailsModal');
+    const jobApplicationModal = document.getElementById('jobApplicationModal');
+    const closeButtons = document.querySelectorAll('.close-modal');
+    const viewDetailsButtons = document.querySelectorAll('.view-details-btn');
+    const quickApplyButtons = document.querySelectorAll('.quick-apply-btn');
+
+    // View Details functionality
+    viewDetailsButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const jobCard = button.closest('.job-card');
+            const jobId = jobCard.dataset.jobId;
+            const job = jobDetails[jobId];
+            
+            const content = `
+                <h2>${job.title}</h2>
+                <div class="job-info">
+                    <p><strong>Company:</strong> ${job.company}</p>
+                    <p><strong>Location:</strong> ${job.location}</p>
+                    <p><strong>Type:</strong> ${job.type}</p>
+                    <p><strong>Deadline:</strong> ${job.deadline}</p>
+                </div>
+                <div class="job-description">
+                    <h3>Description</h3>
+                    <p>${job.description}</p>
+                </div>
+                <div class="job-requirements">
+                    <h3>Requirements</h3>
+                    <ul>
+                        ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="job-responsibilities">
+                    <h3>Responsibilities</h3>
+                    <ul>
+                        ${job.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="job-benefits">
+                    <h3>Benefits</h3>
+                    <ul>
+                        ${job.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                    </ul>
+                </div>
+                <button class="btn btn-primary apply-now-btn">Apply Now</button>
+            `;
+            
+            document.getElementById('jobDetailsContent').innerHTML = content;
+            jobDetailsModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        });
+    });
+
+    // Quick Apply functionality
+    quickApplyButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const jobCard = button.closest('.job-card');
+            const jobId = jobCard.dataset.jobId;
+            const job = jobDetails[jobId];
+            document.getElementById('jobId').value = jobId;
+            
+            // Pre-fill some form fields with job information
+            document.getElementById('fullName').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('education').value = '';
+            document.getElementById('experience').value = '';
+            document.getElementById('coverLetter').value = `I am writing to apply for the ${job.title} position at ${job.company}.`;
+            
+            jobApplicationModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        });
+    });
+
+    // Close modal functionality
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            jobDetailsModal.style.display = 'none';
+            jobApplicationModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling when modal is closed
+        });
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === jobDetailsModal) {
+            jobDetailsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        if (event.target === jobApplicationModal) {
+            jobApplicationModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Apply Now button in job details modal
+    document.addEventListener('click', (event) => {
+        if (event.target.classList.contains('apply-now-btn')) {
+            jobDetailsModal.style.display = 'none';
+            jobApplicationModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+    });
+
+    // Form submission handling
+    document.getElementById('jobApplicationForm').addEventListener('submit', (event) => {
+        // Get the CV file input
+        const cvInput = document.getElementById('cv');
+        const cvFile = cvInput.files[0];
+        
+        // Check file size (5MB limit)
+        if (cvFile && cvFile.size > 5 * 1024 * 1024) {
+            alert('CV file size must be less than 5MB');
+            event.preventDefault();
+            return;
+        }
+        
+        // Check file type
+        if (cvFile && !cvFile.type.includes('pdf')) {
+            alert('Only PDF files are allowed');
+            event.preventDefault();
+            return;
+        }
+        
+        // If validation passes, the form will submit normally
+    });
+</script>
 
 <!-- Add JavaScript for tab functionality -->
 <script>
