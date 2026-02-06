@@ -78,6 +78,9 @@ require_once($includesPath . 'admin_header.php');
                         <a href="manage_students.php" class="list-group-item list-group-item-action">
                             <i class="fas fa-user-graduate me-2"></i> Student Management
                         </a>
+                        <a href="school_dashboard.php" class="list-group-item list-group-item-action">
+                            <i class="fas fa-school me-2"></i> School Dashboard
+                        </a>
                         <a href="manage_reports.php" class="list-group-item list-group-item-action">
                             <i class="fas fa-file-alt me-2"></i> School Reports
                         </a>
@@ -275,6 +278,57 @@ require_once($includesPath . 'admin_header.php');
                         </div>
                         <h4 class="feature-card-title">File Management</h4>
                         <p class="feature-card-text">Upload and manage system files</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- School Dashboard Row -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card dashboard-card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-school me-2"></i>School Management Dashboard</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="feature-card bg-gradient-danger" data-link="school_dashboard.php">
+                                        <div class="feature-card-icon">
+                                            <i class="fas fa-school"></i>
+                                        </div>
+                                        <h4 class="feature-card-title">School Dashboard</h4>
+                                        <p class="feature-card-text">Manage all school activities</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="feature-card bg-gradient-info" data-link="school_dashboard.php?section=attendance">
+                                        <div class="feature-card-icon">
+                                            <i class="fas fa-clipboard-check"></i>
+                                        </div>
+                                        <h4 class="feature-card-title">Attendance</h4>
+                                        <p class="feature-card-text">Mark and track student & teacher attendance</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="feature-card bg-gradient-warning" data-link="school_dashboard.php?section=cards">
+                                        <div class="feature-card-icon">
+                                            <i class="fas fa-id-card"></i>
+                                        </div>
+                                        <h4 class="feature-card-title">ID Cards</h4>
+                                        <p class="feature-card-text">Generate student identification cards</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="feature-card bg-gradient-success" data-link="school_dashboard.php?section=sms">
+                                        <div class="feature-card-icon">
+                                            <i class="fas fa-sms"></i>
+                                        </div>
+                                        <h4 class="feature-card-title">SMS Services</h4>
+                                        <p class="feature-card-text">Send messages to students and parents</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -501,6 +555,22 @@ document.getElementById('profileForm').addEventListener('submit', function(e) {
         }
     })
     .catch(error => console.error('Error:', error));
+});
+
+// Make all feature cards clickable
+document.addEventListener('DOMContentLoaded', function() {
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const link = this.getAttribute('data-link');
+            if (link) {
+                window.location.href = link;
+            }
+        });
+        
+        // Add cursor pointer to show it's clickable
+        card.style.cursor = 'pointer';
+    });
 });
 </script>
 

@@ -1,5 +1,24 @@
 <?php
-require_once 'config/sms_config.php';
+// Check if SMS config exists, if not, define default values
+if (!file_exists(__DIR__ . '/config/sms_config.php')) {
+    // Default SMS API Configuration
+    define('SMS_API_KEY', 'demo_api_key');
+    define('SMS_API_SECRET', 'demo_api_secret');
+    define('SMS_SENDER_ID', 'EDUSCHOOL');
+    define('SMS_API_URL', 'https://api.example.com/sms/send');
+    
+    // Default rate limiting - maximum number of SMS per hour
+    define('SMS_RATE_LIMIT', 100);
+    
+    // Default SMS Templates
+    define('SMS_TEMPLATES', [
+        'ATTENDANCE_ALERT' => 'Dear {parent_name}, your child {student_name} has been marked as {status} on {date}. Please contact the school if you need further information.',
+        'STUDENT_CARD_READY' => 'Dear {parent_name}, the ID card for {student_name} has been generated and is ready for collection. Please visit the school office to collect it.',
+        'GENERAL_ANNOUNCEMENT' => 'EduSchool: {message}',
+    ]);
+} else {
+    require_once __DIR__ . '/config/sms_config.php';
+}
 
 class SMSService {
     private $db;
@@ -59,23 +78,76 @@ class SMSService {
     }
 
     private function logSMS($recipientType, $recipientId, $phoneNumber, $message, $status) {
-        $stmt = $this->db->prepare("
-            INSERT INTO sms_logs (recipient_type, recipient_id, phone_number, message, status)
-            VALUES (?, ?, ?, ?, ?)
-        ");
-        $stmt->execute([$recipientType, $recipientId, $phoneNumber, $message, $status]);
+        try {
+            // Check if sms_logs table exists
+            $stmt = $this->db->prepare("
+                SELECT COUNT(*) 
+                FROM information_schema.tables 
+                WHERE table_schema = DATABASE() 
+                AND table_name = 'sms_logs'
+            ");
+            $stmt->execute();
+            $tableExists = (bool)$stmt->fetchColumn();
+            
+            // Create table if it doesn't exist
+            if (!$tableExists) {
+                $this->db->exec("
+                    CREATE TABLE IF NOT EXISTS sms_logs (
+                        sms_id INT AUTO_INCREMENT PRIMARY KEY,
+                        recipient_type VARCHAR(20) NOT NULL,
+                        recipient_id INT NOT NULL,
+                        phone_number VARCHAR(20) NOT NULL,
+                        message TEXT NOT NULL,
+                        status VARCHAR(10) NOT NULL DEFAULT 'Pending',
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                    )
+                ");
+            }
+            
+            // Now log the SMS
+            $stmt = $this->db->prepare("
+                INSERT INTO sms_logs (recipient_type, recipient_id, phone_number, message, status)
+                VALUES (?, ?, ?, ?, ?)
+            ");
+            $stmt->execute([$recipientType, $recipientId, $phoneNumber, $message, $status]);
+        } catch (PDOException $e) {
+            // Silently fail - we don't want to break the application if logging fails
+            error_log("SMS logging failed: " . $e->getMessage());
+        }
     }
 
     private function checkRateLimit() {
-        $stmt = $this->db->prepare("
-            SELECT COUNT(*) as count 
-            FROM sms_logs 
-            WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 HOUR)
-        ");
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            // Check if sms_logs table exists
+            $stmt = $this->db->prepare("
+                SELECT COUNT(*) 
+                FROM information_schema.tables 
+                WHERE table_schema = DATABASE() 
+                AND table_name = 'sms_logs'
+            ");
+            $stmt->execute();
+            $tableExists = (bool)$stmt->fetchColumn();
+            
+            if (!$tableExists) {
+                // Table doesn't exist, rate limit not applied
+                return true;
+            }
+            
+            $stmt = $this->db->prepare("
+                SELECT COUNT(*) as count 
+                FROM sms_logs 
+                WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 HOUR)
+            ");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $result['count'] < SMS_RATE_LIMIT;
+            return $result['count'] < SMS_RATE_LIMIT;
+        } catch (PDOException $e) {
+            // In case of error, allow the SMS to be sent
+            error_log("SMS rate limit check failed: " . $e->getMessage());
+            return true;
+        }
     }
 
     public function sendAttendanceAlert($studentId, $status, $date) {
